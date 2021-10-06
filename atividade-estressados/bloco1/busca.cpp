@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <cmath>
 
 bool existe(std::vector<int> fila, int valor) {
   for (int i = 0; i < fila.size(); i++)  {

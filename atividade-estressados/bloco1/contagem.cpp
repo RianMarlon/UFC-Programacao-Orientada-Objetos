@@ -6,7 +6,7 @@ float calcularStressMedio(std::vector<int> fila) {
   float soma = 0;
 
   for (int i = 0; i < fila.size(); i++) {
-    soma += fila[i] > 0 ? fila[i] : fila[i] * -1;
+    soma += std::abs(fila[i]);
   }
 
   float media = soma / fila.size();
@@ -53,13 +53,13 @@ std::string qualMetadeEhMaisEstressada(std::vector<int> fila) {
   int quantidadeSegunda = finalSegunda - inicioSegunda;
 
   for (int i = inicioPrimeira; i < finalPrimeira; i++) {
-    somaPrimeira += fila[i] > 0 ? fila[i] : fila[i] * -1;
+    somaPrimeira += std::abs(fila[i]);
   }
 
   mediaPrimeira = somaPrimeira / quantidadePrimeira;
 
   for (int i = inicioSegunda; i < finalSegunda; i++) {
-    somaSegunda += fila[i] > 0 ? fila[i] : fila[i] * -1;
+    somaSegunda += std::abs(fila[i]);
   }
 
   mediaSegunda = somaSegunda / quantidadeSegunda;
@@ -87,7 +87,7 @@ bool homensSaoMaisEstressadosQueMulheres(std::vector<int> fila) {
       somaHomens += fila[i];
       quantidadeHomens++;
     } else {
-      somaMulheres += fila[i] * -1;
+      somaMulheres += std::abs(fila[i]);
       quantidadeMulheres++;
     }
   }

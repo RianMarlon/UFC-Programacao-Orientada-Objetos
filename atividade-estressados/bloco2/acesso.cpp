@@ -3,7 +3,6 @@
 #include <string>
 #include <cmath>
 #include <random>
-#include <ctime>
 
 std::vector<int> inverterComCopia(const std::vector<int> fila) {
   std::vector<int> filaInvertida;
@@ -26,11 +25,41 @@ void inverterInplace(std::vector<int> &fila) {
 }
 
 int sortear(const std::vector<int> fila) {
-  srand(time(0));
-
   int numeroAleatorio = rand() % fila.size();
 
   return fila[numeroAleatorio];
+}
+
+void embaralhar(std::vector<int> &fila) {
+  for (int i = 0; i < fila.size(); i++) {
+    int numeroAleatorio = rand() % fila.size();
+
+    int valorTemporario = fila[i];
+    fila[i] = fila[numeroAleatorio];
+    fila[numeroAleatorio] = valorTemporario;
+  }
+}
+
+void ordenar(std::vector<int> &fila) {
+  std::vector<int> filaOrdenada = {};
+
+  for (int i = 0; i < fila.size(); i++) {
+    int posicao = i;
+
+    for (int j = 0; j < fila.size(); j++) {
+      if (i < j && fila[i] > fila[j]) {
+        posicao = j + 1 == fila.size() ? j : j + 1;
+      } else if (i > j && fila[i] < fila[j]) {
+        posicao = j == 0 ? j : j - 1;
+      }
+    }
+    
+    filaOrdenada.emplace(filaOrdenada.begin(), fila[i]);
+  }
+
+  for (int i = 0; i < filaOrdenada.size(); i++) {
+    fila[i] = filaOrdenada[i];
+  }
 }
 
 void imprimirVetor(std::vector<int> vetor) {
@@ -58,6 +87,19 @@ int main() {
   std::cout << "\n";
 
   std::vector<int> vetorParaSortear = {43, 322, 53, 4, 8, 9};
-  
   std::cout << sortear(vetorParaSortear) << "\n";
+
+  std::vector<int> vetorParaEmbaralhar = {43, 322, 53, 4, 8, 9};
+  embaralhar(vetorParaEmbaralhar);
+
+  std::cout << "\n";
+  imprimirVetor(vetorParaEmbaralhar);
+  std::cout << "\n";
+
+  std::vector<int> vetorParaOrdenar = {43, 322, 53, 4, 8, 9};
+  ordenar(vetorParaOrdenar);
+
+  std::cout << "\n";
+  imprimirVetor(vetorParaOrdenar);
+  std::cout << "\n";
 }
