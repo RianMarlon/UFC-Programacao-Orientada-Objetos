@@ -1,8 +1,5 @@
 #include <iostream>
 #include <vector>
-#include <string>
-#include <cmath>
-#include <random>
 
 std::vector<int> inverterComCopia(const std::vector<int> fila) {
   std::vector<int> filaInvertida;
@@ -15,12 +12,11 @@ std::vector<int> inverterComCopia(const std::vector<int> fila) {
 }
 
 void inverterInplace(std::vector<int> &fila) {
-  int tamanhoFila = fila.size();
-  for (int i = 0; i < tamanhoFila; i++) {
-    int elemento = fila[i];
-    
-    fila.erase(fila.begin() + i);
-    fila.emplace(fila.begin(), elemento);
+  for (int i = 0; i < (fila.size() / 2); i++) {
+    int posicao = fila.size() - i - 1;
+    int valorTemporario = fila[posicao];
+    fila[posicao] = fila[i];
+    fila[i] = valorTemporario;
   }
 }
 
@@ -41,24 +37,14 @@ void embaralhar(std::vector<int> &fila) {
 }
 
 void ordenar(std::vector<int> &fila) {
-  std::vector<int> filaOrdenada = {};
-
   for (int i = 0; i < fila.size(); i++) {
-    int posicao = i;
-
     for (int j = 0; j < fila.size(); j++) {
-      if (i < j && fila[i] > fila[j]) {
-        posicao = j + 1 == fila.size() ? j : j + 1;
-      } else if (i > j && fila[i] < fila[j]) {
-        posicao = j == 0 ? j : j - 1;
+      if (j > i && fila[j] < fila[i]) {
+        int valorTemporario = fila[i];
+        fila[i] = fila[j];
+        fila[j] = valorTemporario;
       }
     }
-    
-    filaOrdenada.emplace(filaOrdenada.begin(), fila[i]);
-  }
-
-  for (int i = 0; i < filaOrdenada.size(); i++) {
-    fila[i] = filaOrdenada[i];
   }
 }
 
@@ -69,17 +55,12 @@ void imprimirVetor(std::vector<int> vetor) {
 }
 
 int main() {
-  // Retorna lista de mulheres calmas
   std::vector<int> vetorInvertido1 = inverterComCopia({-5, -3, 1, 50});
-  std::vector<int> vetorInvertido2 = inverterComCopia({-51, -9, 5, -50, -99});
-
   std::cout << "\n";
   imprimirVetor(vetorInvertido1);
   std::cout << "\n";
-  imprimirVetor(vetorInvertido2);
-  std::cout << "\n";
 
-  std::vector<int> vetorParaInverter = {43, 322, 53, 4, 8, 9};
+  std::vector<int> vetorParaInverter = {43, 322, 593, 53, 4, 8, 9};
   inverterInplace(vetorParaInverter);
 
   std::cout << "\n";
@@ -96,7 +77,7 @@ int main() {
   imprimirVetor(vetorParaEmbaralhar);
   std::cout << "\n";
 
-  std::vector<int> vetorParaOrdenar = {43, 322, 53, 4, 8, 9};
+  std::vector<int> vetorParaOrdenar = {43, 222, 5, 40, 80, 9};
   ordenar(vetorParaOrdenar);
 
   std::cout << "\n";
