@@ -2,7 +2,7 @@
 #include <vector>
 #include <string>
 
-int procurarMenor(std::vector<int> fila) {
+int procurarMenor(const std::vector<int> fila) {
   int menor = fila[0];
 
   for (int i = 0; i < fila.size(); i++) {
@@ -14,7 +14,7 @@ int procurarMenor(std::vector<int> fila) {
   return menor;
 }
 
-int procurarMenorPos(std::vector<int> fila) {
+int procurarMenorPos(const std::vector<int> fila) {
   int posicao = -1;
 
   for (int i = 0; i < fila.size(); i++) {
@@ -28,7 +28,7 @@ int procurarMenorPos(std::vector<int> fila) {
   return posicao;
 }
 
-int procurarMelhorPosSe(std::vector<int> fila) {
+int procurarMelhorPosSe(const std::vector<int> fila) {
   int posicao = -1;
 
   for (int i = 0; i < fila.size(); i++) {

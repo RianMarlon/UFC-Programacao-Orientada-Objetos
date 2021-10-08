@@ -3,7 +3,7 @@
 #include <string>
 #include <cmath>
 
-bool existe(std::vector<int> fila, int valor) {
+bool existe(const std::vector<int> fila, int valor) {
   for (int i = 0; i < fila.size(); i++)  {
     if (fila[i] == valor) {
       return true;
@@ -13,7 +13,7 @@ bool existe(std::vector<int> fila, int valor) {
   return false;
 }
 
-int contar(std::vector<int> fila, int valor) {
+int contar(const std::vector<int> fila, int valor) {
   int quantidadeVezes = 0;
 
   for (int i = 0; i < fila.size(); i++) {
@@ -25,7 +25,7 @@ int contar(std::vector<int> fila, int valor) {
   return quantidadeVezes;
 }
 
-int procurarValor(std::vector<int> fila, int valor) {
+int procurarValor(const std::vector<int> fila, int valor) {
   for (int i = 0; i < fila.size(); i++) {
     if (fila[i] == valor) {
       return i;
@@ -35,7 +35,7 @@ int procurarValor(std::vector<int> fila, int valor) {
   return -1;
 }
 
-int procurarValorApartir(std::vector<int> fila, int valor, int posicao) {
+int procurarValorApartir(const std::vector<int> fila, int valor, int posicao) {
   for (int i = posicao; i < fila.size(); i++) {
     if (fila[i] == valor) {
       return i;

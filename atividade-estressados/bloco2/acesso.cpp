@@ -48,7 +48,7 @@ void ordenar(std::vector<int> &fila) {
   }
 }
 
-void imprimirVetor(std::vector<int> vetor) {
+void imprimirVetor(const std::vector<int> vetor) {
   for (int i = 0; i < vetor.size(); i++) {
     std::cout << vetor[i] << "\n";
   }

@@ -2,7 +2,7 @@
 #include <vector>
 #include <string>
 
-float calcularStressMedio(std::vector<int> fila) {
+float calcularStressMedio(const std::vector<int> fila) {
   float soma = 0;
 
   for (int i = 0; i < fila.size(); i++) {
@@ -14,7 +14,7 @@ float calcularStressMedio(std::vector<int> fila) {
   return media;
 }
 
-std::string maisHomensOuMulheres(std::vector<int> fila) {
+std::string maisHomensOuMulheres(const std::vector<int> fila) {
   int homens = 0;
   int mulheres = 0;
 
@@ -37,7 +37,7 @@ std::string maisHomensOuMulheres(std::vector<int> fila) {
   }
 }
 
-std::string qualMetadeEhMaisEstressada(std::vector<int> fila) {
+std::string qualMetadeEhMaisEstressada(const std::vector<int> fila) {
   float somaPrimeira = 0;
   float mediaPrimeira = 0;
 
@@ -73,7 +73,7 @@ std::string qualMetadeEhMaisEstressada(std::vector<int> fila) {
   }
 }
 
-bool homensSaoMaisEstressadosQueMulheres(std::vector<int> fila) {
+bool homensSaoMaisEstressadosQueMulheres(const std::vector<int> fila) {
   float somaHomens = 0;
   float mediaHomens = 0;
   int quantidadeHomens = 0;
@@ -100,7 +100,7 @@ bool homensSaoMaisEstressadosQueMulheres(std::vector<int> fila) {
 
 int main() {
   std::cout << calcularStressMedio({-1, -50, -1, -99}) << "\n"; // -37.75
-  std::cout << calcularStressMedio({5, 3, -1, -50, -1, -99}) << "\n"; // -23.8333
+  std::cout << calcularStressMedio({5, 3, -1, -50, -1, -99}) << "\n"; // -26.5
 
   std::cout << maisHomensOuMulheres({5, 3, -1, -50, -1, -99}) << "\n"; // "mulheres"
   std::cout << maisHomensOuMulheres({5, 3, 1, -50, -1, -99}) << "\n"; // "empate"
