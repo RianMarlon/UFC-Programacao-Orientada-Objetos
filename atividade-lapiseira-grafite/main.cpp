@@ -25,14 +25,14 @@ std::vector<std::string> mySplit(std::string texto, char delimiter) {
   return textos;
 }
 
-class Grafite {
-  public: float calibre;
-  public: std::string dureza;
-  public: int tamanho;
+struct Grafite {
+  float calibre;
+  std::string dureza;
+  int tamanho;
 
-  public: Grafite(float calibre, std::string dureza, int tamanho) : calibre { calibre }, dureza { dureza }, tamanho { tamanho } {};
+  Grafite(float calibre, std::string dureza, int tamanho) : calibre { calibre }, dureza { dureza }, tamanho { tamanho } {};
 
-  public: int desgastePorFolha() {
+  int desgastePorFolha() {
     if (this->dureza == "HB") {
       return 1;
     } else if (this->dureza == "2B") {
@@ -46,19 +46,19 @@ class Grafite {
     }
   }
 
-  public: std::string toString() {
+  std::string toString() {
     std::string str = "grafite: [" + std::to_string(this->calibre) + ":" + this->dureza + ":" + std::to_string(this->tamanho) + "]";
     return str;
   }
 };
 
-class Lapiseira {
-  public: float calibre;
-  public: std::optional<Grafite> grafite;
+struct Lapiseira {
+  float calibre;
+  std::optional<Grafite> grafite;
 
-  public: Lapiseira(float calibre) : calibre { calibre } {}
+  Lapiseira(float calibre) : calibre { calibre } {}
 
-  public: bool inserir(Grafite grafite) {
+  bool inserir(Grafite grafite) {
     if (grafite.calibre != calibre) {
       std::cout << "fail: calibre incompatível\n";
       return false;
@@ -70,7 +70,7 @@ class Lapiseira {
     this->grafite = grafite;
   }
 
-  public: void escrever(int folhas) {
+  void escrever(int folhas) {
     int folhasEscritas { 0 };
 
     if (this->grafite.has_value()) {
@@ -92,7 +92,7 @@ class Lapiseira {
     return;
   }
 
-  public: Grafite remover() {
+  Grafite remover() {
     std::optional<Grafite> grafiteTemp = this->grafite;
     if (this->grafite.has_value()) {
       this->grafite.reset();
@@ -101,7 +101,7 @@ class Lapiseira {
     return grafiteTemp.value();
   }
 
-  public: std::string toString() {
+  std::string toString() {
     std::string strGrafite = this->grafite.has_value() ? this->grafite.value().toString() : "grafite: null";
     std::string str = "calibre: " + std::to_string(this->calibre) + ", " + strGrafite;
 
@@ -109,8 +109,8 @@ class Lapiseira {
   }
 };
 
-class Solver{
-  public: static void main() {
+struct Solver{
+  static void main() {
     Lapiseira lapiseira = Lapiseira(0.5f);
     while(true) {
       std::string line;
@@ -143,8 +143,8 @@ class Solver{
   }
 };
 
-class Manual {
-  public: static void main() {
+struct Manual {
+  static void main() {
     //case inserindo grafites
     Lapiseira lapiseira = Lapiseira(0.5f);
     std::cout << lapiseira.toString() << "\n";
