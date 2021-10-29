@@ -1,7 +1,6 @@
 #include <sstream>
 #include <iostream>
 #include <vector>
-#include <cstring>
 #include <optional>
 
 std::vector<std::string> mySplit(std::string texto, char delimiter) {
@@ -46,9 +45,9 @@ struct Grafite {
     }
   }
 
-  std::string toString() {
-    std::string str = "grafite: [" + std::to_string(this->calibre) + ":" + this->dureza + ":" + std::to_string(this->tamanho) + "]";
-    return str;
+  friend std::ostream& operator<<(std::ostream& os, const Grafite& grafite ) {
+    os << "grafite: [" << grafite.calibre << ":" << grafite.dureza << ":" << grafite.tamanho << "]";
+    return os;
   }
 };
 
@@ -88,24 +87,27 @@ struct Lapiseira {
         std::cout << "warning: grafite acabou\n";
       }
     }
-    
-    return;
   }
 
-  Grafite remover() {
-    std::optional<Grafite> grafiteTemp = this->grafite;
+  std::optional<Grafite> remover() {
     if (this->grafite.has_value()) {
+      Grafite grafiteRemovido = this->grafite.value();
       this->grafite.reset();
+
+      return grafiteRemovido;
+    } else {
+      std::cout << "warning: lapiseira sem grafite\n";
+    }
+  }
+
+  friend std::ostream& operator<<(std::ostream& os, const Lapiseira& lapiseira) {
+    if (lapiseira.grafite.has_value()) {
+      os << "calibre: " << lapiseira.calibre << ", " << lapiseira.grafite.value();
+    } else {
+      os << "calibre: " << lapiseira.calibre << ", " << "grafite: null";
     }
 
-    return grafiteTemp.value();
-  }
-
-  std::string toString() {
-    std::string strGrafite = this->grafite.has_value() ? this->grafite.value().toString() : "grafite: null";
-    std::string str = "calibre: " + std::to_string(this->calibre) + ", " + strGrafite;
-
-    return str;
+    return os;
   }
 };
 
@@ -119,10 +121,10 @@ struct Solver{
 
       std::vector<std::string> ui = mySplit(line, ' ');
 
-      if(ui[0] == "end") {
+      if(ui[0] == "encerrar") {
         break;
-      } else if(ui[0] == "help") {
-        std::cout << "iniciar _calibre; inserir _calibre _dureza _tamanho; remover; escrever _folhas\n";
+      } else if(ui[0] == "ajuda") {
+        std::cout << "iniciar _calibre; mostrar; inserir _calibre _dureza _tamanho; remover; escrever _folhas; encerrar\n";
       } else if(ui[0] == "iniciar") {
         lapiseira = Lapiseira(std::stof(ui[1]));
       } else if(ui[0] == "inserir") {
@@ -133,7 +135,7 @@ struct Solver{
       } else if(ui[0] == "remover") {
         lapiseira.remover();
       } else if(ui[0] == "mostrar") {
-        std::cout << lapiseira.toString() << "\n";
+        std::cout << lapiseira << "\n";
       } else if (ui[0] == "escrever") {
         lapiseira.escrever(std::stoi(ui[1]));
       } else {
@@ -147,26 +149,26 @@ struct Manual {
   static void main() {
     //case inserindo grafites
     Lapiseira lapiseira = Lapiseira(0.5f);
-    std::cout << lapiseira.toString() << "\n";
+    std::cout << lapiseira << "\n";
     //calibre: 0.5, grafite: null
     lapiseira.inserir(Grafite(0.7f, "2B", 50));
     //fail: calibre incompatível
     lapiseira.inserir(Grafite(0.5f, "2B", 50));
-    std::cout << lapiseira.toString() << "\n";
+    std::cout << lapiseira << "\n";
     //calibre: 0.5, grafite: [0.5:2B:50]
 
     //case inserindo e removendo
     lapiseira = Lapiseira(0.3f);
     lapiseira.inserir(Grafite(0.3f, "2B", 50));
-    std::cout << lapiseira.toString() << "\n";
+    std::cout << lapiseira << "\n";
     //calibre: 0.3, grafite: [0.3:2B:50]
     lapiseira.inserir(Grafite(0.3f, "4B", 70));
     //fail: ja existe grafite
-    std::cout << lapiseira.toString() << "\n";
+    std::cout << lapiseira << "\n";
     //calibre: 0.3, grafite: [0.3:2B:50]
     lapiseira.remover();
     lapiseira.inserir(Grafite(0.3f, "4B", 70));
-    std::cout << lapiseira.toString() << "\n";
+    std::cout << lapiseira << "\n";
     //calibre: 0.3, grafite: [0.3:4B:70]
 
     //case escrevendo 1
@@ -174,30 +176,30 @@ struct Manual {
     lapiseira.inserir(Grafite(0.9f, "4B", 4));
     lapiseira.escrever(1);
     //warning: grafite acabou
-    std::cout << lapiseira.toString() << "\n";
+    std::cout << lapiseira << "\n";
     //calibre: 0.9, grafite: null
     lapiseira.inserir(Grafite(0.9f, "4B", 30));
     lapiseira.escrever(6);
-    std::cout << lapiseira.toString() << "\n";
+    std::cout << lapiseira << "\n";
     //calibre: 0.9, grafite: [0.9:4B:6]
     lapiseira.escrever(3);
     //fail: folhas escritas completas: 1
     //warning: grafite acabou
-    std::cout << lapiseira.toString() << "\n";
+    std::cout << lapiseira << "\n";
     //calibre: 0.9, grafite: null
 
     //case escrevendo 2
     lapiseira = Lapiseira(0.9f);
     lapiseira.inserir(Grafite(0.9f, "2B", 15));
-    std::cout << lapiseira.toString() << "\n";
+    std::cout << lapiseira << "\n";
     //calibre: 0.9, grafite: [0.9:2B:15]
     lapiseira.escrever(4);
-    std::cout << lapiseira.toString() << "\n";
+    std::cout << lapiseira << "\n";
     //calibre: 0.9, grafite: [0.9:2B:7]
     lapiseira.escrever(4);
     //fail: folhas escritas completas: 3
     //warning: grafite acabou
-    std::cout << lapiseira.toString() << "\n";
+    std::cout << lapiseira << "\n";
     //calibre: 0.9, grafite: null
   }
 };
