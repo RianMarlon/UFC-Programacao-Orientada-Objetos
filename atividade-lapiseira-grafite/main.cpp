@@ -124,7 +124,12 @@ struct Solver{
       if(ui[0] == "encerrar") {
         break;
       } else if(ui[0] == "ajuda") {
-        std::cout << "iniciar _calibre; mostrar; inserir _calibre _dureza _tamanho; remover; escrever _folhas; encerrar\n";
+        std::cout << "iniciar _calibre;\n"
+          << "mostrar;\n"
+          << "inserir _calibre _dureza _tamanho;\n"
+          << "escrever _folhas;\n"
+          << "remover;\n"
+          << "encerrar;\n";
       } else if(ui[0] == "iniciar") {
         lapiseira = Lapiseira(std::stof(ui[1]));
       } else if(ui[0] == "inserir") {
