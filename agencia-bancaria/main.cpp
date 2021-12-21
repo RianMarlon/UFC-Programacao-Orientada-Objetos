@@ -76,7 +76,7 @@ class CheckingAccount : public Account {
       this->type = "CC";
     }
 
-    void monthlyUpdate() {
+    void monthlyUpdate() override {
       this->balance -= 20;
     }
 };
@@ -87,9 +87,7 @@ class SavingsAccount : public Account {
       this->type = "CP";
     }
 
-    ~SavingsAccount() {}
-
-    void monthlyUpdate() {
+    void monthlyUpdate() override {
       this->balance += this->balance * 0.01;
     }
 };
